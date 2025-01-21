@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/login/Login.css">
+  <script src="/login/Login.js" defer></script>
+
+  <title>PicassoProyect</title>
+</head>
+<body>
+  <div class="login-container">
+    <h2>PICASSO</h2>
+    <form id="login-form">
+      <div class="form-group">
+          <label for="username">Nombre de Usuario</label>
+          <input type="text" id="username" name="username" placeholder="Ingrese su nombre de usuario" required>
+      </div>
+      <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" required>
+          <span class="toggle-password" id="toggle-password">👁️</>
+      </div>
+      <div class="buttons">
+          <button type="submit" class="button" id="login-button">Iniciar Sesión</button>
+          <button type="button" class="button cancel" id="cancel-button">Cancelar</button>
+          <button type="button" class="button logout" id="logout-button" style="display: none;">Cerrar Sesión</button>
+      </div>
+  </form>
+  <div class="logged-in" id="logged-in-status" style="display: none;">Usuario logueado</div>
+</div>
+</body>
+</html>
