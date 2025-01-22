@@ -1,10 +1,13 @@
 import jwt from 'jsonwebtoken'
 import { UserRepository } from '../models/UserRepository.js'
-import { SECRET_JWT_KEY } from '../../config/config.js'
 
 export const renderLogin = (req, res) => {
   const { user } = req.session
   res.render('login', user)
+}
+
+export const renderRegisterForm = (req, res) => {
+  res.render('Register')
 }
 
 export const handleLogin = async (req, res) => {
@@ -14,7 +17,7 @@ export const handleLogin = async (req, res) => {
     const user = await UserRepository.login({ username, password })
     const token = jwt.sign(
       { id: user._id, username: user.username },
-      SECRET_JWT_KEY,
+      process.env.SECRET_JWT_KEY,
       { expiresIn: '1d' }
     )
     res.cookie('access_token', token, {
@@ -30,11 +33,11 @@ export const handleLogin = async (req, res) => {
 }
 
 export const handleRegister = async (req, res) => {
-  const { username, password } = req.body
-
+  const { username, email, password } = req.body
+  console.log('Datos recibidos:', { username, password, email })
   try {
-    const id = await UserRepository.create({ username, password })
-    res.status(201).json({ message: 'User registered successfully: ', id })
+    const userId = await UserRepository.create({ username, password, email })
+    res.status(201).json({ message: 'User registered successfully: ', userId })
   } catch (err) {
     res.status(400).json({ error: err.message })
   }

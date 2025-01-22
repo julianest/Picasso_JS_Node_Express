@@ -1,27 +1,26 @@
 import express from 'express'
 import path from 'path'
-import { PORT, SECRET_JWT_KEY } from './config/config.js'
+import { PORT } from './config/config.js'
 import cookieParser from 'cookie-parser'
 import jwt from 'jsonwebtoken'
 import loginRoutes from './src/routes/LoginRoutes.js'
-// import session from 'express-session'
+import dotenv from 'dotenv'
+
+// Configurar variables de entorno
+dotenv.config()
+const SECRET_JWT_KEY = process.env.SECRET_JWT_KEY
 
 const app = express()
 
 app.set('view engine', 'ejs')
 app.set('views', './src/views')
-app.use(express.static('public'))
 app.use('/utils', express.static('utils'))
 
 // Middleware
 app.use(express.static(path.resolve('./public'))) // Scaneo archivo estaticos
 app.use(express.json()) // Aqui nos permite una vez enviada la peticion generar la conversion a json que ya viene de express.
 app.use(cookieParser()) // Enviamos la informacion por cookies
-/* app.use(session({ // Configuracion Session
-  secret: SECRET_JWT_KEY,
-  resave: false,
-  saveUninitialized: true
-})) */
+
 app.use((req, res, next) => {
   const token = req.cookies.access_token
 

@@ -9,8 +9,8 @@ body {
   background-color: #f0f0f0;
 }
 
-.login-container {
-  background-color: #fff;
+.register-container {
+  background-color: rgba(8, 180, 100, 0.268);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -18,7 +18,7 @@ body {
   max-width: 400px;
 }
 
-.login-container h2 {
+.register-container h2 {
   margin-bottom: 20px;
   text-align: center;
   color: #333;
@@ -111,15 +111,16 @@ body {
   font-weight: bold;
 }
 
+/* ----------------------------------- */
 
 /* Media Queries for Responsiveness */
 @media (max-width: 600px) {
-  .login-container {
-      padding: 15px;
+  .register-container {
+    padding: 15px;
   }
 
   .button {
-      padding: 8px 16px;
-      font-size: 14px;
+    padding: 8px 16px;
+    font-size: 14px;
   }
 }

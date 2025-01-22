@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/login/Login.css">
+  <link rel="stylesheet" href="/styles.css">
   <script src="/login/Login.js"  type="module"></script>
 
   <title>PicassoProyect</title>
 </head>
 <body>
   <div class="login-container">
-    <h2>PICASSO</h2>
+    <h1 style="text-align: center;">PICASSO</h1>
+    <h2>¡Accede a tu cuenta!</h2>
     <form id="login-form">
       <div class="form-group">
           <label for="username">Nombre de Usuario</label>
@@ -24,14 +26,16 @@
       <div class="buttons">
           <button type="submit" class="button" id="login-button">Iniciar Sesión</button>
           <button type="button" class="button cancel" id="cancel-button">Cancelar</button>
-          <button type="button" class="button logout" id="logout-button" style="display: none;">Cerrar Sesión</button>
       </div>
   </form>
-  <div class="logged-in" id="logged-in-status" style="display: none;">Usuario logueado</div>
+  <p style="text-align: center; color: black; margin-top: 5%;">¿No tienes cuenta? <a href="/register" id="register-link">¡Regístrate aquí!</a></p>
 </div>
-<div id="loading-indicator" style="display: none; text-align: center; margin-top: 1em;">
+<div id="loading-indicator" style="display: none;">
   <div class="spinner"></div>
     <p>Cargando...</p>
+</div>
+<div id="response-overlay" style="display: none;"></div>
+  <div id="response-contain-message" style="display: none;"></div>
 </div>
 </body>
 </html>

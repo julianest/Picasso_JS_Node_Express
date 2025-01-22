@@ -17,12 +17,13 @@ const User = Schema('User', {
 })
 
 export class UserRepository {
-  static async create ({ username, password }) {
+  static async create ({ username, email, password }) {
     Validation.username(username)
+    Validation.email(email)
     Validation.password(password)
 
     const user = User.findOne({ username })
-    if (user) throw new Error('Username already exists')
+    if (user) throw new Error('Usuario ya Existe')
 
     const id = crypto.randomUUID().toString()
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS)
@@ -30,12 +31,13 @@ export class UserRepository {
     User.create({
       _id: id,
       username,
+      email,
       password: hashedPassword
     }).save()
     return id
   }
 
-  static async login ({ username, password }) {
+  static async login ({ username, email, password }) {
     Validation.username(username)
     Validation.password(password)
 

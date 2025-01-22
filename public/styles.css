@@ -1,0 +1,82 @@
+/* -----------Spinner------------------ */
+#loading-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.727); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; 
+  flex-direction: column;
+}
+
+.spinner {
+  border: 5px solid #f3f3f3; 
+  border-top: 5px solid #1DB954;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+p {
+  font-size: 14px;
+  color: #1DB954;
+  margin-top: 10px;
+}
+
+/* -----------Error Modal------------------ */
+#response-overlay {
+  display: none; /* Mantén oculto por defecto */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo opaco */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#response-contain-message {
+  display: none;
+  text-align: center;
+  /* background-color: white; */
+  position: absolute;
+  /* padding: 20px; */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10005;
+}
+
+#response-image {
+  max-width: 350px; 
+  width: 100%;     
+  max-height: 350px; 
+  display: block;  
+  border-radius: 8px; 
+}
+
+#response-text {
+  color: #f44336;
+  font-size: 16px;
+  font-weight: bold;
+  max-width: 350px; 
+  width: 100%;
+  display: block; 
+  background-color: white;
+}
