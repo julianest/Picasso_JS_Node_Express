@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/protected/Protected.css">
+  <title>Área Protegida</title>
+</head>
+<body>
+  <h1>¡Bienvenido, <%= username %>!</h1> 
+  <p>Has accedido al área protegida de la aplicación.</p>
+  <form action="/logout" method="POST">
+    <button type="submit">Cerrar sesión</button>
+  </form>
+</body>
+</html>

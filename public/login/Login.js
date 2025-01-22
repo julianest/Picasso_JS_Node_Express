@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const loginForm = document.getElementById('login-form')
   // Estados
   const usernameInput = document.getElementById('username')
-  const loggedInStatus = document.getElementById('logged-in-status')
+  // const loggedInStatus = document.getElementById('logged-in-status')
+  // Spiner de carga
+  const loadingIndicator = document.getElementById('loading-indicator')
 
   togglePassword.addEventListener('click', function () {
     const type = passwordInput.type === 'password' ? 'text' : 'password'
@@ -30,34 +32,29 @@ document.addEventListener('DOMContentLoaded', function () {
       return
     }
 
+    showOnSpinner()
+
     try {
-      // Enviar datos al servidor (login)
       const response = await fetch('/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password }),
+        credentials: 'include'
       })
 
       if (!response.ok) {
-        const errorMessage = await response.text()
+        const errorMessage = await response.json()
         alert(`Error: ${errorMessage}`)
-        return
       }
-
-      const data = await response.json()
-      sessionStorage.setItem('loggedInUser', data.user.username)
-      showLoggedInState()
     } catch (error) {
       console.error('Error al iniciar sesión:', error)
-      alert('Error al iniciar sesión. Por favor, intente nuevamente.')
+      alert('Error del catch al iniciar sesión. Por favor, intente nuevamente.')
+    } finally {
+      showOffSpinner()
     }
   })
-
-  if (sessionStorage.getItem('loggedInUser')) {
-    showLoggedInState()
-  }
 
   logoutButton.addEventListener('click', function () {
     sessionStorage.removeItem('loggedInUser')
@@ -69,21 +66,15 @@ document.addEventListener('DOMContentLoaded', function () {
     passwordInput.value = ''
   })
 
-  function showLoggedInState () {
-    loginButton.style.display = 'none'
-    logoutButton.style.display = 'inline-block'
-    cancelButton.style.display = 'none'
-    logoutButton.classList.add('logout')
-    loggedInStatus.style.display = 'block'
-    loggedInStatus.textContent = `Usuario logueado: ${sessionStorage.getItem('loggedInUser')}`
+  function showOnSpinner () {
+    loadingIndicator.style.display = 'block'
+    loginButton.textContent = 'Iniciando sesión...'
+    loginButton.disabled = true
   }
 
-  function showLoggedOutState () {
-    loginButton.style.display = 'inline-block'
-    logoutButton.style.display = 'none'
-    cancelButton.style.display = 'inline-block'
-    loggedInStatus.style.display = 'none'
-    usernameInput.value = ''
-    passwordInput.value = ''
+  function showOffSpinner () {
+    loadingIndicator.style.display = 'none'
+    loginButton.textContent = 'Iniciar Sesión'
+    loginButton.disabled = false
   }
 })

@@ -1,17 +1,44 @@
 import express from 'express'
 import path from 'path'
-import { PORT } from './config/config.js'
-// import { UserRepository } from './src/models/user-repository.js'
+import { PORT, SECRET_JWT_KEY } from './config/config.js'
+import cookieParser from 'cookie-parser'
+import jwt from 'jsonwebtoken'
 import loginRoutes from './src/routes/LoginRoutes.js'
+// import session from 'express-session'
 
 const app = express()
 
 app.set('view engine', 'ejs')
 app.set('views', './src/views')
+app.use(express.static('public'))
 
 // Middleware
 app.use(express.static(path.resolve('./public'))) // Scaneo archivo estaticos
 app.use(express.json()) // Aqui nos permite una vez enviada la peticion generar la conversion a json que ya viene de express.
+app.use(cookieParser()) // Enviamos la informacion por cookies
+/* app.use(session({ // Configuracion Session
+  secret: SECRET_JWT_KEY,
+  resave: false,
+  saveUninitialized: true
+})) */
+app.use((req, res, next) => {
+  const token = req.cookies.access_token
+
+  if (!token) { // Si no ahi token no realizar nada y continuar
+    req.session = { user: null }
+    return next()
+  }
+
+  try {
+    const data = jwt.verify(token, SECRET_JWT_KEY)
+    req.session = { user: data }
+  } catch (err) {
+    console.error(err)
+    req.session.user = null
+  }
+
+  next() // envia a la siguiente ruta o middleware
+})
 // Routes
 app.use('/', loginRoutes)
 
