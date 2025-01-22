@@ -1,6 +1,5 @@
 import express from 'express'
 import { renderLogin, handleLogin, renderRegisterForm, handleRegister, handleProtected, handleLogout } from '../controllers/UserController.js'
-// import authenticateToken from '../../config/tokenConfig.js'
 
 const router = express.Router()
 
