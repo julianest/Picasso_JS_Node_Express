@@ -23,8 +23,7 @@ export const handleLogin = async (req, res) => {
       sameSite: 'strict', // la cookie solo se puede acceder en el mismo sitio o dominio
       maxAge: 60 * 60 * 1000 // 1h en milisegundos
     })
-    res.redirect('/protected')
-    // res.status(200).json({ message: 'Login successful' })
+    res.status(200).json({ redirectTo: '/protected', message: 'Login successful' })
   } catch (err) {
     res.status(401).json({ error: err.message })
   }
@@ -35,7 +34,7 @@ export const handleRegister = async (req, res) => {
 
   try {
     const id = await UserRepository.create({ username, password })
-    res.status(201).json({ message: 'User registered successfully', id })
+    res.status(201).json({ message: 'User registered successfully: ', id })
   } catch (err) {
     res.status(400).json({ error: err.message })
   }
@@ -44,10 +43,11 @@ export const handleRegister = async (req, res) => {
 export const handleProtected = async (req, res) => {
   const { user } = req.session
   if (!user) return res.status(403).json({ message: 'Unauthorized' })
-  res.render('Protected', { username: user.username }) // {_id, username }
+  res.render('Protected', { username: user.username })
 }
 
 export const handleLogout = async (req, res) => {
   res.clearCookie('access_token')
-  res.status(200).json({ message: 'Sesión cerrada' })
+  res.redirect('/')
+  // res.status(200).json({ message: 'Sesión cerrada' })
 }

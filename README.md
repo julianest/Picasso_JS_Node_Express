@@ -6,3 +6,5 @@ npm init - iniciar proyecto con npm (package.json)
 npm install ejs - motor de plantillas 
 npm install jsonwebtoken - jwt
 npm install cookie-parser - generar cookie
+
+-----npm install socket.io dotenv ejs----- por si acaso

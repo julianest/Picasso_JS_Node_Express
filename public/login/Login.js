@@ -1,3 +1,5 @@
+import { delay } from '../../utils/Tools.js'
+
 /* eslint-disable no-undef */
 document.addEventListener('DOMContentLoaded', function () {
   // Boton Input cambiar la visibilidad
@@ -44,21 +46,53 @@ document.addEventListener('DOMContentLoaded', function () {
         credentials: 'include'
       })
 
-      if (!response.ok) {
+      if (response.ok) {
+        const { redirectTo } = await response.json() // obtenemos la URL desde la respuesta
+        await delay(2000)
+
+        location.assign(redirectTo) // la asignamos location.assign para navegar
+      } else if (response.status === 401) {
+        alert('El usuario o la contraseña son incorrectos. Por favor, intente nuevamente.')
+      } else {
         const errorMessage = await response.json()
-        alert(`Error: ${errorMessage}`)
+        alert(`Error: ${errorMessage} Por favor, intente nuevamente.`)
       }
     } catch (error) {
-      console.error('Error al iniciar sesión:', error)
-      alert('Error del catch al iniciar sesión. Por favor, intente nuevamente.')
+      alert(`Error: ${error} al iniciar sesión. Por favor, intente nuevamente.`)
     } finally {
       showOffSpinner()
     }
+
+    /* await withMinimumDelay(async () => {
+      try {
+        const response = await fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username, password }),
+          credentials: 'include'
+        })
+        if (response.ok) {
+          const data = await response.json()
+          location.assign(data.redirectTo) // Redirige al URL proporcionado por el backend
+        } else if (response.status === 401) {
+          alert('El usuario o la contraseña son incorrectos. Por favor, intente nuevamente.')
+        } else {
+          const errorMessage = await response.json()
+          alert(`Error: ${errorMessage.error}`)
+        }
+      } catch (error) {
+        console.error('Error al iniciar sesión:', error)
+        alert('Error del catch al iniciar sesión. Por favor, intente nuevamente.')
+      }
+    }, 5000) // Tiempo mínimo de espera: 1 segundo
+    showOffSpinner() */
   })
 
   logoutButton.addEventListener('click', function () {
-    sessionStorage.removeItem('loggedInUser')
-    showLoggedOutState()
+    // sessionStorage.removeItem('loggedInUser')
+    // showLoggedOutState()
   })
 
   cancelButton.addEventListener('click', function () {
